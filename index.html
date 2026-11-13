@@ -246,9 +246,9 @@
 
       <!-- HEADER -->
       <div class="header-banner">
-        <span class="cdc-badge">Career Development Center</span>
+        <span class="cdc-badge">CAREER AND ENTREPRENEURSHIP DEVELOPMENT CENTER</span>
         <h1 class="header-title">Form Kesediaan Pelaksana Kegiatan</h1>
-        <p class="header-subtitle">CDC Universitas Islam Negeri Madura</p>
+        <p class="header-subtitle">CEDC Universitas Islam Negeri Madura</p>
       </div>
 
       <div class="p-4 p-md-5">
@@ -332,31 +332,30 @@
             >
           </div>
 
-          <!-- ROW PANGKAT & GOLONGAN -->
+          <!-- ROW JABATAN FUNGSIONAL & PANGKAT -->
           <div class="row g-3 mb-3">
+            <div class="col-sm-6">
+              <label class="form-label" for="jabatanFungsional">
+                Jabatan Fungsional <span class="text-danger">*</span>
+              </label>
+              <select class="form-select" id="jabatanFungsional" required>
+                <option value="" selected disabled>-- Pilih Jabatan Fungsional --</option>
+                <option value="Guru besar">Guru besar</option>
+                <option value="Lektor kepala">Lektor kepala</option>
+                <option value="Lektor">Lektor</option>
+                <option value="Lainnya">Lainnya</option>
+              </select>
+            </div>
+
             <div class="col-sm-6">
               <label class="form-label" for="pangkat">
                 Pangkat <span class="text-danger">*</span>
               </label>
               <select class="form-select" id="pangkat" required>
                 <option value="" selected disabled>-- Pilih Pangkat --</option>
-                <option value="Pembina">Pembina</option>
-                <option value="Penata Tingkat I">Penata Tingkat I</option>
-                <option value="Ahli Pertama">Ahli Pertama</option>
-                <option value="Pemula">Pemula</option>
-              </select>
-            </div>
-
-            <div class="col-sm-6">
-              <label class="form-label" for="golongan">
-                Golongan <span class="text-danger">*</span>
-              </label>
-              <select class="form-select" id="golongan" required>
-                <option value="" selected disabled>-- Pilih Golongan --</option>
-                <option value="IV/a">IV/a</option>
-                <option value="III/d">III/d</option>
-                <option value="X">X</option>
-                <option value="V">V</option>
+                <option value="Pembina / IV">Pembina / IV</option>
+                <option value="Penata / III">Penata / III</option>
+                <option value="PPPK / X">PPPK / X</option>
               </select>
             </div>
           </div>
@@ -397,14 +396,14 @@
             >
           </div>
 
-          <!-- ROW UKURAN BAJU & KESEDIAAN -->
+          <!-- ROW UKURAN KAOS & KESEDIAAN -->
           <div class="row g-3 mb-3">
             <div class="col-sm-6">
-              <label class="form-label" for="baju">
-                Ukuran Baju <span class="text-danger">*</span>
+              <label class="form-label" for="ukuranKaos">
+                Ukuran Kaos <span class="text-danger">*</span>
               </label>
-              <select class="form-select" id="baju" required>
-                <option value="" selected disabled>-- Pilih Ukuran --</option>
+              <select class="form-select" id="ukuranKaos" required>
+                <option value="" selected disabled>-- Pilih Ukuran Kaos --</option>
                 <option value="2XL">2XL</option>
                 <option value="XL">XL</option>
                 <option value="L">L</option>
@@ -463,7 +462,7 @@
     </div>
 
     <div class="footer-text">
-      &copy; 2026 Career Development Center (CDC) &bull; UIN Madura
+      &copy; 2026 Career and Entrepreneurship Development Center (CEDC) &bull; UIN Madura
     </div>
 
   </div>
@@ -647,15 +646,16 @@
       const reader = new FileReader();
 
       reader.onload = async function(e) {
+        // Data dari form UI dimapping ke key yang diharapkan backend (Google Apps Script)
         const formData = {
           nama: document.getElementById("nama").value.trim(),
           nip: nipVal,
           jabatan: jabatanVal,
-          pangkat: document.getElementById("pangkat").value,
-          golongan: document.getElementById("golongan").value,
+          pangkat: document.getElementById("jabatanFungsional").value, // UI: Jabatan Fungsional -> Backend: pangkat
+          golongan: document.getElementById("pangkat").value,          // UI: Pangkat -> Backend: golongan
           whatsapp: "+62" + document.getElementById("whatsapp").value.trim(),
           email: document.getElementById("email").value.trim(),
-          baju: document.getElementById("baju").value,
+          baju: document.getElementById("ukuranKaos").value,           // UI: Ukuran Kaos -> Backend: baju
           kehadiran: document.getElementById("kehadiran").value,
           fileName: file.name,
           fileData: e.target.result
