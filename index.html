@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Form Kesediaan Pelaksana Kegiatan - CDC UIN Madura</title>
+
+  <!-- Bootstrap 5 CSS (Fast CDN) -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+
+  <style>
+    :root {
+      --primary-color: #0f5132;
+      --primary-hover: #0a3622;
+      --primary-soft: #e8f5e9;
+      --accent-color: #0d6efd;
+      --bg-surface: #f8fafc;
+      --card-border: #e2e8f0;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+    }
+
+    body {
+      background-color: var(--bg-surface);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      padding-top: 36px;
+      padding-bottom: 60px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .form-wrapper {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .main-card {
+      background: #ffffff;
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.06), 0 4px 10px -2px rgba(15, 23, 42, 0.03);
+      overflow: hidden;
+      transition: box-shadow 0.25s ease;
+    }
+
+    .header-banner {
+      background: linear-gradient(135deg, #0f5132 0%, #198754 60%, #20c997 100%);
+      color: #ffffff;
+      padding: 32px 28px 26px;
+      text-align: center;
+      position: relative;
+    }
+
+    .cdc-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
+      color: #ffffff;
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .header-title {
+      font-size: 1.45rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+      letter-spacing: -0.01em;
+    }
+
+    .header-subtitle {
+      font-size: 0.92rem;
+      opacity: 0.92;
+      margin-bottom: 0;
+    }
+
+    /* Agenda Box */
+    .agenda-card {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-left: 4px solid #16a34a;
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 28px;
+    }
+
+    .agenda-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 12px;
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+
+    .agenda-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .agenda-label {
+      font-weight: 700;
+      color: #14532d;
+      min-width: 90px;
+      flex-shrink: 0;
+    }
+
+    .agenda-desc {
+      color: #1f2937;
+    }
+
+    /* Form Fields */
+    .form-label {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 6px;
+    }
+
+    .form-control, .form-select {
+      border: 1.5px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.93rem;
+      color: #1e293b;
+      transition: all 0.2s ease;
+    }
+
+    .form-control:focus, .form-select:focus {
+      border-color: #198754;
+      box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.15);
+    }
+
+    .form-control[readonly] {
+      background-color: #f1f5f9;
+      color: #475569;
+      cursor: not-allowed;
+      border-color: #e2e8f0;
+    }
+
+    /* Suggestions List */
+    #suggestionsList {
+      position: absolute;
+      z-index: 1050;
+      width: 100%;
+      max-height: 220px;
+      overflow-y: auto;
+      border-radius: 10px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .suggestion-item {
+      border: none;
+      border-bottom: 1px solid #f1f5f9;
+      padding: 10px 14px;
+      font-size: 0.9rem;
+      transition: background-color 0.15s ease;
+    }
+
+    .suggestion-item:last-child {
+      border-bottom: none;
+    }
+
+    .suggestion-item:hover, .suggestion-item:focus {
+      background-color: #ecfdf5;
+      color: #065f46;
+    }
+
+    /* Signature Upload Box */
+    .upload-area {
+      border: 2px dashed #cbd5e1;
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      background: #fafafa;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .upload-area:hover {
+      border-color: #198754;
+      background: #f0fdf4;
+    }
+
+    .preview-box {
+      margin-top: 12px;
+      display: none;
+      text-align: center;
+    }
+
+    .preview-img {
+      max-height: 120px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 4px;
+      background: #ffffff;
+    }
+
+    /* Submit Button */
+    .btn-submit {
+      background: #0f5132;
+      border: none;
+      border-radius: 12px;
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 13px 20px;
+      width: 100%;
+      letter-spacing: 0.01em;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(15, 81, 50, 0.25);
+    }
+
+    .btn-submit:hover:not(:disabled) {
+      background: #0a3622;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(15, 81, 50, 0.32);
+    }
+
+    .btn-submit:disabled {
+      background: #64748b;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .footer-text {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container form-wrapper">
+
+    <div class="main-card">
+
+      <!-- HEADER -->
+      <div class="header-banner">
+        <span class="cdc-badge">Career Development Center</span>
+        <h1 class="header-title">Form Kesediaan Pelaksana Kegiatan</h1>
+        <p class="header-subtitle">CDC Universitas Islam Negeri Madura</p>
+      </div>
+
+      <div class="p-4 p-md-5">
+
+        <!-- AGENDA / INFO KEGIATAN -->
+        <div class="agenda-card">
+          <div class="agenda-item">
+            <span class="agenda-label">Agenda:</span>
+            <span class="agenda-desc">
+              Focus Group Discussion (FGD) dengan tema: <strong>“Strategi Peningkatan Partisipasi Alumni dan Pemanfaatan Data untuk Mutu Akademik UIN Madura”</strong>
+            </span>
+          </div>
+
+          <div class="agenda-item">
+            <span class="agenda-label">Waktu:</span>
+            <span class="agenda-desc">
+              <strong>Senin, 16 Nopember 2026</strong> pukul <strong>08.00 WIB s.d. selesai</strong> di Lt. 2 Gedung KH. Mohammad Djufri Marzuqi / Rektorat UIN Madura.
+            </span>
+          </div>
+
+          <div class="agenda-item">
+            <span class="agenda-label">Pemateri:</span>
+            <span class="agenda-desc">
+              <strong>Noor Saif Muhammad Mussafi, S.Si., M.Sc., Ph.D.</strong><br>
+              <small class="text-muted">(Director of Center for Entrepreneurship and Career Development (CENDI), UIN Sunan Kalijaga Yogyakarta)</small>
+            </span>
+          </div>
+        </div>
+
+        <!-- FORMULIR -->
+        <form id="kegiatanForm" onsubmit="handleFormSubmit(event)">
+
+          <!-- NAMA LENGKAP -->
+          <div class="mb-3 position-relative">
+            <label class="form-label" for="nama">
+              Nama Lengkap & Gelar <span class="text-danger">*</span>
+            </label>
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control"
+                id="nama"
+                placeholder="Ketik nama Anda untuk mencari..."
+                autocomplete="off"
+                required
+                oninput="cariDataNama(this.value)"
+              >
+              <span class="input-group-text bg-white" id="statusLoader" style="display:none;">
+                <div class="spinner-border spinner-border-sm text-success" role="status"></div>
+              </span>
+            </div>
+            <div id="suggestionsList" class="list-group shadow mt-1"></div>
+            <div id="namaFeedback" class="form-text text-muted">
+              Ketik nama, lalu pilih salah satu saran untuk mengisi NIP & Jabatan otomatis.
+            </div>
+          </div>
+
+          <!-- NIP -->
+          <div class="mb-3">
+            <label class="form-label" for="nip">NIP</label>
+            <input
+              type="text"
+              class="form-control"
+              id="nip"
+              placeholder="Otomatis terisi setelah memilih nama..."
+              readonly
+              required
+            >
+          </div>
+
+          <!-- JABATAN -->
+          <div class="mb-3">
+            <label class="form-label" for="jabatan">Jabatan</label>
+            <input
+              type="text"
+              class="form-control"
+              id="jabatan"
+              placeholder="Otomatis terisi setelah memilih nama..."
+              readonly
+              required
+            >
+          </div>
+
+          <!-- ROW PANGKAT & GOLONGAN -->
+          <div class="row g-3 mb-3">
+            <div class="col-sm-6">
+              <label class="form-label" for="pangkat">
+                Pangkat <span class="text-danger">*</span>
+              </label>
+              <select class="form-select" id="pangkat" required>
+                <option value="" selected disabled>-- Pilih Pangkat --</option>
+                <option value="Pembina">Pembina</option>
+                <option value="Penata Tingkat I">Penata Tingkat I</option>
+                <option value="Ahli Pertama">Ahli Pertama</option>
+                <option value="Pemula">Pemula</option>
+              </select>
+            </div>
+
+            <div class="col-sm-6">
+              <label class="form-label" for="golongan">
+                Golongan <span class="text-danger">*</span>
+              </label>
+              <select class="form-select" id="golongan" required>
+                <option value="" selected disabled>-- Pilih Golongan --</option>
+                <option value="IV/a">IV/a</option>
+                <option value="III/d">III/d</option>
+                <option value="X">X</option>
+                <option value="V">V</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- WHATSAPP -->
+          <div class="mb-3">
+            <label class="form-label" for="whatsapp">
+              Nomor WhatsApp <span class="text-danger">*</span>
+            </label>
+            <div class="input-group">
+              <span class="input-group-text bg-light fw-semibold text-muted">+62</span>
+              <input
+                type="tel"
+                class="form-control"
+                id="whatsapp"
+                placeholder="81234567890"
+                pattern="[0-9]{8,15}"
+                required
+                title="Masukkan nomor WhatsApp tanpa angka 0 di depan"
+              >
+            </div>
+            <div class="form-text text-muted">
+              Cukup ketik angka setelah angka 0 (contoh: 8123456789).
+            </div>
+          </div>
+
+          <!-- EMAIL -->
+          <div class="mb-3">
+            <label class="form-label" for="email">
+              E-mail Aktif <span class="text-danger">*</span>
+            </label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              placeholder="nama@email.com"
+              required
+            >
+          </div>
+
+          <!-- ROW UKURAN BAJU & KESEDIAAN -->
+          <div class="row g-3 mb-3">
+            <div class="col-sm-6">
+              <label class="form-label" for="baju">
+                Ukuran Baju <span class="text-danger">*</span>
+              </label>
+              <select class="form-select" id="baju" required>
+                <option value="" selected disabled>-- Pilih Ukuran --</option>
+                <option value="2XL">2XL</option>
+                <option value="XL">XL</option>
+                <option value="L">L</option>
+                <option value="M">M</option>
+                <option value="S">S</option>
+              </select>
+            </div>
+
+            <div class="col-sm-6">
+              <label class="form-label" for="kehadiran">
+                Kesediaan Kehadiran <span class="text-danger">*</span>
+              </label>
+              <select class="form-select" id="kehadiran" required>
+                <option value="" selected disabled>-- Pilih Kesediaan --</option>
+                <option value="Bersedia">Bersedia</option>
+                <option value="Tidak Bersedia">Tidak Bersedia</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- TANDA TANGAN UPLOAD -->
+          <div class="mb-4">
+            <label class="form-label">
+              Tanda Tangan Digital / Foto TTD <span class="text-danger">*</span>
+            </label>
+            <div class="upload-area">
+              <input
+                type="file"
+                class="form-control"
+                id="ttdFile"
+                accept="image/*"
+                required
+                onchange="handleFileSelect(this)"
+              >
+              <div class="small text-muted mt-2">
+                Format: <strong>JPG / PNG</strong> (Ukuran maksimal: <strong>2 MB</strong>).
+              </div>
+              <div id="previewContainer" class="preview-box">
+                <img id="previewImage" class="preview-img shadow-sm" alt="Preview Tanda Tangan">
+                <div class="small text-success mt-1 fw-semibold" id="previewFileName"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SUBMIT BUTTON -->
+          <button type="submit" class="btn-submit" id="btnSubmit">
+            Kirim Kesediaan
+          </button>
+
+        </form>
+
+        <!-- ALERT NOTIFIKASI -->
+        <div id="alertBox" class="mt-4"></div>
+
+      </div>
+    </div>
+
+    <div class="footer-text">
+      &copy; 2026 Career Development Center (CDC) &bull; UIN Madura
+    </div>
+
+  </div>
+
+  <script>
+    // =========================================================================
+    // KONFIGURASI WEB APP URL GOOGLE APPS SCRIPT
+    // Ganti URL berikut dengan Web App URL hasil Deploy Google Apps Script Anda:
+    // =========================================================================
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwlofjlexE0asIgLs33vk9TnUlcMJGGgVqUZ9BI6rCoESPZyc8QoK1esjuYkmTnzSfOJw/exec";
+
+    let searchTimeout;
+
+    // ======================================
+    // PENCARIAN NAMA PEGAWAI (FETCH GET)
+    // ======================================
+    function cariDataNama(keyword) {
+      clearTimeout(searchTimeout);
+
+      const cleanKeyword = keyword.trim();
+      const suggestionsBox = document.getElementById("suggestionsList");
+      const loader = document.getElementById("statusLoader");
+      const feedback = document.getElementById("namaFeedback");
+
+      // Reset jika nama diubah manual
+      document.getElementById("nip").value = "";
+      document.getElementById("jabatan").value = "";
+
+      if (cleanKeyword.length < 2) {
+        suggestionsBox.innerHTML = "";
+        loader.style.display = "none";
+        feedback.innerText = "Ketik minimal 2 karakter.";
+        feedback.className = "form-text text-muted";
+        return;
+      }
+
+      loader.style.display = "flex";
+      feedback.innerText = "Mencari data pegawai...";
+      feedback.className = "form-text text-primary";
+
+      searchTimeout = setTimeout(async function() {
+        if (!SCRIPT_URL || SCRIPT_URL.includes("ISI_DENGAN_WEB_APP_URL")) {
+          loader.style.display = "none";
+          feedback.innerText = "Catatan: SCRIPT_URL belum dikonfigurasi.";
+          feedback.className = "form-text text-danger";
+          return;
+        }
+
+        try {
+          const endpoint = `${SCRIPT_URL}?action=cariPegawai&keyword=${encodeURIComponent(cleanKeyword)}`;
+          const response = await fetch(endpoint);
+          const result = await response.json();
+
+          loader.style.display = "none";
+          suggestionsBox.innerHTML = "";
+
+          if (result.status === "success" && result.data && result.data.length > 0) {
+            feedback.innerText = "Klik pada salah satu nama di bawah:";
+            feedback.className = "form-text text-success";
+
+            result.data.forEach(function(item) {
+              const btnItem = document.createElement("button");
+              btnItem.type = "button";
+              btnItem.className = "list-group-item list-group-item-action suggestion-item";
+
+              const namaText = document.createElement("div");
+              namaText.className = "fw-bold text-dark";
+              namaText.textContent = item.nama;
+
+              const detailText = document.createElement("small");
+              detailText.className = "text-muted";
+              detailText.textContent = `NIP: ${item.nip} • ${item.jabatan}`;
+
+              btnItem.appendChild(namaText);
+              btnItem.appendChild(detailText);
+
+              btnItem.onclick = function() {
+                document.getElementById("nama").value = item.nama;
+                document.getElementById("nip").value = item.nip;
+                document.getElementById("jabatan").value = item.jabatan;
+                suggestionsBox.innerHTML = "";
+                feedback.innerText = "✓ Data NIP & Jabatan berhasil terisi otomatis!";
+                feedback.className = "form-text text-success fw-bold";
+              };
+
+              suggestionsBox.appendChild(btnItem);
+            });
+          } else {
+            feedback.innerText = "Nama tidak ditemukan di Master Pegawai.";
+            feedback.className = "form-text text-danger";
+          }
+        } catch (error) {
+          loader.style.display = "none";
+          feedback.innerText = "Gagal memuat saran: " + error.message;
+          feedback.className = "form-text text-danger";
+        }
+      }, 350);
+    }
+
+    // Tutup saran saat klik di luar
+    document.addEventListener("click", function(event) {
+      if (!event.target.closest("#nama") && !event.target.closest("#suggestionsList")) {
+        document.getElementById("suggestionsList").innerHTML = "";
+      }
+    });
+
+    // Validasi & Preview Gambar Tanda Tangan
+    function handleFileSelect(input) {
+      const previewBox = document.getElementById("previewContainer");
+      const previewImg = document.getElementById("previewImage");
+      const fileNameDisplay = document.getElementById("previewFileName");
+
+      if (input.files && input.files[0]) {
+        const file = input.files[0];
+        const fileSizeMB = file.size / (1024 * 1024);
+
+        if (!file.type.startsWith("image/")) {
+          alert("Harap pilih file gambar (JPG/PNG).");
+          input.value = "";
+          previewBox.style.display = "none";
+          return;
+        }
+
+        if (fileSizeMB > 2) {
+          alert("Ukuran gambar melebihi batas maksimal 2 MB!");
+          input.value = "";
+          previewBox.style.display = "none";
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          previewImg.src = e.target.result;
+          fileNameDisplay.textContent = `✓ ${file.name} (${fileSizeMB.toFixed(2)} MB)`;
+          previewBox.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+      } else {
+        previewBox.style.display = "none";
+      }
+    }
+
+    // ======================================
+    // PENGIRIMAN FORM (FETCH POST)
+    // ======================================
+    function handleFormSubmit(event) {
+      event.preventDefault();
+
+      const form = document.getElementById("kegiatanForm");
+      const nipVal = document.getElementById("nip").value;
+      const jabatanVal = document.getElementById("jabatan").value;
+      const fileInput = document.getElementById("ttdFile");
+      const btn = document.getElementById("btnSubmit");
+      const alertBox = document.getElementById("alertBox");
+
+      if (!SCRIPT_URL || SCRIPT_URL.includes("ISI_DENGAN_WEB_APP_URL")) {
+        alertBox.innerHTML = '<div class="alert alert-danger shadow-sm"><strong>Perhatian:</strong> SCRIPT_URL belum dikonfigurasi dengan URL Google Apps Script Anda.</div>';
+        return;
+      }
+
+      if (!nipVal || !jabatanVal) {
+        alert("Silakan ketik nama dan klik salah satu saran agar NIP dan Jabatan terisi otomatis!");
+        return;
+      }
+
+      if (!fileInput.files || fileInput.files.length === 0) {
+        alert("Harap unggah file tanda tangan.");
+        return;
+      }
+
+      const file = fileInput.files[0];
+      if (file.size > 2 * 1024 * 1024) {
+        alert("Ukuran gambar tanda tangan maksimal 2 MB.");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Mengirim data...';
+      alertBox.innerHTML = "";
+
+      const reader = new FileReader();
+
+      reader.onload = async function(e) {
+        const formData = {
+          nama: document.getElementById("nama").value.trim(),
+          nip: nipVal,
+          jabatan: jabatanVal,
+          pangkat: document.getElementById("pangkat").value,
+          golongan: document.getElementById("golongan").value,
+          whatsapp: "+62" + document.getElementById("whatsapp").value.trim(),
+          email: document.getElementById("email").value.trim(),
+          baju: document.getElementById("baju").value,
+          kehadiran: document.getElementById("kehadiran").value,
+          fileName: file.name,
+          fileData: e.target.result
+        };
+
+        try {
+          const response = await fetch(SCRIPT_URL, {
+            method: "POST",
+            headers: {
+              "Content-Type": "text/plain;charset=utf-8"
+            },
+            body: JSON.stringify(formData)
+          });
+
+          const result = await response.json();
+
+          if (result.status === "success") {
+            alertBox.innerHTML = `
+              <div class="alert alert-success shadow-sm d-flex align-items-center">
+                <div>
+                  <h6 class="fw-bold mb-1">Berhasil Terkirim!</h6>
+                  <div>${result.message}</div>
+                </div>
+              </div>
+            `;
+            form.reset();
+            document.getElementById("previewContainer").style.display = "none";
+            document.getElementById("suggestionsList").innerHTML = "";
+            document.getElementById("namaFeedback").innerText = "Ketik nama, lalu pilih salah satu saran untuk mengisi NIP & Jabatan otomatis.";
+            document.getElementById("namaFeedback").className = "form-text text-muted";
+          } else {
+            throw new Error(result.message || "Gagal menyimpan data.");
+          }
+        } catch (error) {
+          alertBox.innerHTML = `
+            <div class="alert alert-danger shadow-sm">
+              <strong>Pengiriman Gagal:</strong> ${error.message}
+            </div>
+          `;
+        } finally {
+          btn.disabled = false;
+          btn.innerText = "Kirim Kesediaan";
+        }
+      };
+
+      reader.onerror = function() {
+        alert("Gagal membaca file gambar tanda tangan.");
+        btn.disabled = false;
+        btn.innerText = "Kirim Kesediaan";
+      };
+
+      reader.readAsDataURL(file);
+    }
+  </script>
+
+</body>
+</html>
